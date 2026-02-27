@@ -1,7 +1,7 @@
-export function createMarkup({ title, description, id }) {
+export function createMarkup({ task, description, id }) {
   return `<li class="task-list-item" data-id=${id}>
         <button class="task-list-item-btn">Delete</button>
-        <h3>${title}</h3>
+        <h3>${task}</h3>
         <p>${description}</p>
       </li>`;
 }

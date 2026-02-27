@@ -18,6 +18,8 @@ function handleSubmit(event) {
 
   const task = event.target.elements.taskName.value;
   const description = event.target.elements.taskDescription.value;
+  console.log(task);
+  
 
   const obj = { task, description, id: nanoid() };
 
