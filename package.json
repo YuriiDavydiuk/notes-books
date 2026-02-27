@@ -1,11 +1,11 @@
 {
-  "name": "notes_books",
+  "name": "notes-books",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/notes_books/",
+    "build": "vite build --base=/notes-books/",
     "preview": "vite preview"
   },
   "devDependencies": {
