@@ -1,16 +1,55 @@
-/*
-  Створи список справ.
-  На сторінці є два інпути які має вводиться назва і текст задачі.
-  Після натискання на кнопку "Add" завдання додається до списку #task-list.
+import { nanoid } from 'nanoid';
 
-  У кожної картки має бути кнопка "Delete", щоб можна було
-  прибрати завдання зі списку.
-  Список із завданнями має бути доступним після перезавантаження сторінки.
+import { refs } from './js/refs';
+import { createMarkup, createMarkupList } from './js/render-tasks';
+import iziToast from 'izitoast';
+import { manageChangeBtn } from './js/theme-switcher';
 
-  Розмітка картки задачі
-  <li class="task-list-item">
-      <button class="task-list-item-btn">Delete</button>
-      <h3>Заголовок</h3>
-      <p>Текст</p>
-  </li>
-*/
+const KEY_OBJ = 'taskLists';
+const array = JSON.parse(localStorage.getItem(KEY_OBJ)) ?? [];
+
+refs.list.insertAdjacentHTML('beforeend', createMarkupList(array));
+
+refs.form.addEventListener('submit', handleSubmit);
+refs.list.addEventListener('click', handleClick);
+
+function handleSubmit(event) {
+  event.preventDefault();
+
+  const task = event.target.elements.taskName.value;
+  const description = event.target.elements.taskDescription.value;
+
+  const obj = { task, description, id: nanoid() };
+
+  if (!task || !description) {
+    iziToast.error({
+      title: 'error',
+      message: 'Fill all fields',
+      position: 'topCenter',
+    });
+    return;
+  }
+
+  refs.list.insertAdjacentHTML('beforeend', createMarkup(obj));
+
+  refs.form.reset();
+  array.push(obj);
+  localStorage.setItem(KEY_OBJ, JSON.stringify(array));
+}
+
+function handleClick(event) {
+  if (!event.target.classList.contains('task-list-item-btn')) return;
+
+  const findLi = event.target.closest('[data-id]');
+  const id = findLi.dataset.id;
+  // console.log(id);
+
+  const newArr = array.filter(item => item.id !== id);
+
+  array.length = 0;
+  array.push(...newArr);
+
+  localStorage.setItem(KEY_OBJ, JSON.stringify(array));
+
+  findLi.remove();
+}
