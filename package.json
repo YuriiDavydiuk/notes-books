@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/notes-books/",
+    "build": "vite build --base=/blenden-js-9-10-modules/",
     "preview": "vite preview"
   },
   "devDependencies": {
